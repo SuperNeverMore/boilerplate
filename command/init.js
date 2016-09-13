@@ -19,7 +19,7 @@ module.exports =()=>{
 		gitUrl = config.template[tplName].url;
 		branch = config.template[tplName].branch;
 
-		let cmdStr = 'git clone '+gitUrl+' '+projectName+ ' && cd '+projectName+' && git checkout '+branch;
+		let cmdStr = `git clone ${gitUrl} ${projectName} && cd ${projectName} && git checkout ${branch}`;
 		console.log(chalk.white('\n 开始构建...'))
 		exec(cmdStr,(error,stdout,stderr)=>{
 			if(error){
@@ -27,7 +27,7 @@ module.exports =()=>{
 				process.exit();
 			}
 			console.log(chalk.green('\n ✔️ 构建完成'))
-			console.log('请执行\n cd '+projectName+' && npm install \n');
+			console.log(`\n cd ${projectName} && npm install \n`);
 			process.exit();
 		})
 	})
