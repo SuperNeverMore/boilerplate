@@ -1,0 +1,31 @@
+{
+  "name": "boilerplate",
+  "version": "1.0.0",
+  "description": "boilerplate cli ",
+  "main": "index.js",
+  "bin":{
+    "sn":"bin/sn"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/superNever/boilerplate.git"
+  },
+  "keywords": [
+    "boilerplate"
+  ],
+  "author": "supernever",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/superNever/boilerplate/issues"
+  },
+  "homepage": "https://github.com/superNever/boilerplate#readme",
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "co": "^4.6.0",
+    "co-prompt": "^1.0.0",
+    "commander": "^2.9.0"
+  }
+}
