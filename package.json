@@ -1,7 +1,7 @@
 {
-  "name": "boilerplate",
-  "version": "1.0.0",
-  "description": "boilerplate cli ",
+  "name": "fed-easy-boilerplate",
+  "version": "1.0.1",
+  "description": "fed-easy-boilerplate cli ",
   "main": "index.js",
   "bin":{
     "sn":"bin/sn"
