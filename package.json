@@ -1,6 +1,6 @@
 {
   "name": "fed-easy-boilerplate",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "fed-easy-boilerplate cli ",
   "main": "index.js",
   "bin":{
