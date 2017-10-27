@@ -1,6 +1,5 @@
 # boilerplate
 
-##  此项目用于收藏自己感兴趣的仓库，从而不用再去github各种查找了🤔
 ## 下载
 ```bash
 npm install fed-easy-boilerplate -g
