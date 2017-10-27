@@ -3,8 +3,8 @@
   "version": "1.0.5",
   "description": "fed-easy-boilerplate cli ",
   "main": "index.js",
-  "bin":{
-    "sn":"bin/sn"
+  "bin": {
+    "sn": "bin/sn"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
