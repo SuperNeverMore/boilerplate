@@ -4,7 +4,6 @@ const co = require('co')
 const prompt = require('co-prompt')
 const config = require('../templates')
 const chalk = require('chalk')
-const rimraf = require('rimraf')
 module.exports =()=>{
 	co(function*(){
 		let projectName = yield prompt('项目名称为: ')
