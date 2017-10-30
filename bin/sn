@@ -29,7 +29,13 @@ program
   .action(() => {
     require('../command/init')()
   })
-
+program
+    .command('publish')
+    .description('发布当前工程')
+    .alias('p')
+    .action(()=>{
+        require('../command/publish')()
+    })
 program
     .command('delete')
     .description('删除模板')
