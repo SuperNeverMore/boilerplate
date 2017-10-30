@@ -57,15 +57,14 @@ module.exports =()=>{
 			branch = config.template['website'].branch;
 		}
 		let cmdStr = `git clone ${gitUrl} ${projectName} && cd ${projectName} && git checkout ${branch}`;
-		console.log(chalk.white('\n 开始构建...'))
+		console.log(chalk.white('......开始构建......'))
 		yield (function(){
 			return new Promise(function(resolve,reject){
 				exec(cmdStr,(error,stdout,stderr)=>{
-					if(error){
-						console.log(error)
-						process.exit();
-					}
-					console.log(`请运行: \n cd ${projectName} && npm install \n`);
+					if(error) {
+                        console.log(error)
+                        process.exit();
+                    }
 					exec(`rm -rf ./${projectName}/.git || rd/s/q ./${projectName}/.git`,(error,stdout,stderr) => {
 						// process.exit();
 					})
@@ -73,11 +72,12 @@ module.exports =()=>{
 				})
 			})
 		})()
-		console.log(chalk.green('开始处理文件'))
+		console.log(chalk.green('......正在处理文件......'))
 		let cur_path = path.join(process.cwd(), projectName)
 		// 处理指定文件夹
         readDirSync(cur_path, 'demo', projectName)
         console.log(chalk.green('√ ️ 构建完成'))
+        console.log(chalk.red(`请运行: cd ${projectName} && npm install \n`));
         process.exit()
 	})
 }
