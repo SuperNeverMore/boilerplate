@@ -6,6 +6,12 @@ const config = require('../templates')
 const chalk = require('chalk')
 const path = require('path')
 const fs = require('fs')
+/**
+ *
+ * @param origin
+ * @param name
+ * @param desname
+ */
 const readDirSync = (origin, name='demo',desname)=> {
     var dir = fs.readdirSync(origin, 'utf-8');
     for (let j of dir) {
@@ -30,6 +36,12 @@ const readDirSync = (origin, name='demo',desname)=> {
         }
     }
 };
+/**
+ *
+ * @param dir
+ * @param name
+ * @param desname
+ */
 const replaceNameToDes = (dir, name, desname) => {
     let dataStr = fs.readFileSync(dir, {encoding: 'utf-8'});
 	dataStr = dataStr.replace(new RegExp(name, 'g'), desname);

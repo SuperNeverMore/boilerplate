@@ -13,7 +13,7 @@ sn
 ## init
 ```bash
 $ sn init
-//模板 website
+//模板 vue
 //名字 自定义
 ```
 看一下效果.
