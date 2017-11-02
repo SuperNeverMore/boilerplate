@@ -6,6 +6,8 @@ const config = require('../templates')
 const chalk = require('chalk')
 const path = require('path')
 const fs = require('fs')
+const ora = require('ora')
+const rimraf = require('rimraf')
 /**
  *
  * @param origin
@@ -69,7 +71,11 @@ module.exports =()=>{
 			branch = config.template['website'].branch;
 		}
 		let cmdStr = `git clone ${gitUrl} ${projectName} && cd ${projectName} && git checkout ${branch}`;
-		console.log(chalk.white('......开始构建......'))
+        const spinner = ora(chalk.red('开始构建......')).start();
+        setTimeout(() => {
+            spinner.color = 'yellow';
+            spinner.text = chalk.red('构建中......');
+        }, 1000);
 		yield (function(){
 			return new Promise(function(resolve,reject){
 				exec(cmdStr,(error,stdout,stderr)=>{
@@ -77,18 +83,18 @@ module.exports =()=>{
                         console.log(error)
                         process.exit();
                     }
-					exec(`rm -rf ./${projectName}/.git || rd/s/q ./${projectName}/.git`,(error,stdout,stderr) => {
-						// process.exit();
-					})
+					// exec(`rm -rf ./${projectName}/.git`,(error,stdout,stderr) => {
+					// 	// process.exit();
+					// })
+                    rimraf.sync(`./${projectName}/.git`)
 					resolve()
 				})
 			})
 		})()
-		console.log(chalk.green('......正在处理文件......'))
 		let cur_path = path.join(process.cwd(), projectName)
 		// 处理指定文件夹
         readDirSync(cur_path, 'demo', projectName)
-        console.log(chalk.green('√ ️ 构建完成'))
+        spinner.succeed(chalk.green(' ️ 构建完成'))
         console.log(chalk.red(`请运行: cd ${projectName} && npm install \n`));
         process.exit()
 	})
