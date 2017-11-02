@@ -8,6 +8,13 @@ program
 program
     .usage('<command>')
 program
+    .command('update')
+    .description('版本更新')
+    .alias('u')
+    .action(() => {
+        require('../command/update')()
+    })
+program
     .command('add')
     .description('增加一个模板')
     .alias('a')
