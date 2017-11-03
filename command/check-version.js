@@ -3,6 +3,7 @@ const semver = require('semver')
 const co = require('co')
 const prompt = require('co-prompt')
 const chalk = require('chalk')
+const updatePackage = require('./update')
 const packageConfig = require('../package.json')
 
 module.exports = done => {
@@ -24,8 +25,7 @@ module.exports = done => {
         co(function* () {
           let update = yield prompt('Do you want to update the package ? [Y/N]')
           if (update.toLowerCase() === 'y' || update.toLowerCase() === 'yes') {
-            console.log(update)
-            process.exit()
+            updatePackage()
           } else if (update.toLowerCase() === 'n' || update.toLowerCase() === 'no') {
             done()
           }
