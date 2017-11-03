@@ -8,6 +8,7 @@ const path = require('path')
 const fs = require('fs')
 const ora = require('ora')
 const rimraf = require('rimraf')
+const checkVersion = require('./check-version')
 /**
  *
  * @param origin
@@ -50,52 +51,54 @@ const replaceNameToDes = (dir, name, desname) => {
 	fs.writeFileSync(dir, dataStr, 'utf8');
 }
 module.exports =()=>{
-	co(function*(){
-		let projectName = yield prompt('项目名称为: ')
-		while (!projectName) {
-			projectName = yield prompt('请重新输入项目名称： ')
-		}
-		let tplName = yield prompt('模板名称为: ');
-		let gitUrl;
-		let branch;
-		if (tplName) {
-			if(!config.template[tplName]){
-				console.log(chalk.red('\n 模板不存在'))
-				process.exit();
-			} else {
-				gitUrl = config.template[tplName].url;
-				branch = config.template[tplName].branch;
+	checkVersion(() => {
+		co(function*(){
+			let projectName = yield prompt('项目名称为: ')
+			while (!projectName) {
+				projectName = yield prompt('请重新输入项目名称： ')
 			}
-		} else {
-			gitUrl = config.template['website'].url;
-			branch = config.template['website'].branch;
-		}
-		let cmdStr = `git clone ${gitUrl} ${projectName} && cd ${projectName} && git checkout ${branch}`;
-        const spinner = ora(chalk.red('开始构建......')).start();
-        setTimeout(() => {
-            spinner.color = 'yellow';
-            spinner.text = chalk.red('构建中......');
-        }, 1000);
-		yield (function(){
-			return new Promise(function(resolve,reject){
-				exec(cmdStr,(error,stdout,stderr)=>{
-					if(error) {
-                        console.log(error)
-                        process.exit();
-                    }
-					// exec(`rm -rf ./${projectName}/.git`,(error,stdout,stderr) => {
-					// 	// process.exit();
-					// })
-                    rimraf.sync(`./${projectName}/.git`)
-					resolve()
+			let tplName = yield prompt('模板名称为: ');
+			let gitUrl;
+			let branch;
+			if (tplName) {
+				if(!config.template[tplName]){
+					console.log(chalk.red('\n 模板不存在'))
+					process.exit();
+				} else {
+					gitUrl = config.template[tplName].url;
+					branch = config.template[tplName].branch;
+				}
+			} else {
+				gitUrl = config.template['website'].url;
+				branch = config.template['website'].branch;
+			}
+			let cmdStr = `git clone ${gitUrl} ${projectName} && cd ${projectName} && git checkout ${branch}`;
+			const spinner = ora(chalk.red('开始构建......')).start();
+			setTimeout(() => {
+				spinner.color = 'yellow';
+				spinner.text = chalk.red('构建中......');
+			}, 1000);
+			yield (function(){
+				return new Promise(function(resolve,reject){
+					exec(cmdStr,(error,stdout,stderr)=>{
+						if(error) {
+							console.log(error)
+							process.exit();
+						}
+						// exec(`rm -rf ./${projectName}/.git`,(error,stdout,stderr) => {
+						// 	// process.exit();
+						// })
+						rimraf.sync(`./${projectName}/.git`)
+						resolve()
+					})
 				})
-			})
-		})()
-		let cur_path = path.join(process.cwd(), projectName)
-		// 处理指定文件夹
-        readDirSync(cur_path, 'demo', projectName)
-        spinner.succeed(chalk.green(' ️ 构建完成'))
-        console.log(chalk.red(`请运行: cd ${projectName} && npm install \n`));
-        process.exit()
+			})()
+			let cur_path = path.join(process.cwd(), projectName)
+			// 处理指定文件夹
+			readDirSync(cur_path, 'demo', projectName)
+			spinner.succeed(chalk.green(' ️ 构建完成'))
+			console.log(chalk.red(`请运行: cd ${projectName} && npm install \n`));
+			process.exit()
+		})
 	})
 }
